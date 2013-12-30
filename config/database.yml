@@ -1,0 +1,11 @@
+development:
+  adapter: postgresql
+  database: trackback_scraper-dev
+  pool: 10
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  database: trackback_scraper-test
+  pool: 10
+  timeout: 5000
