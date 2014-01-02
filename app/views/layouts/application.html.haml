@@ -1,0 +1,33 @@
+!!! 5
+- application_name = Rails.application.class.to_s.split('::').first
+%html(lang="en-US" class="#{controller_name}-#{action_name}")
+  %head
+    %title
+      - if content_for?(:title)
+        = yield (:title)
+      - else
+        = application_name
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.brand{href: '/'}= application_name
+    .container-fluid
+      .row-fluid
+        .span8.offset3
+          - flash.keys.each do |key|
+            .alert{ class: "alert-#{key}" }
+              %a.close{ href: '#', "data-dismiss" => "alert" } x
+              %h4.alert-heading= key.capitalize
+              - if flash[key].respond_to?(:each)
+                - flash[key].each do |msg|
+                  = msg
+                  %br
+              - else
+                = flash[key]
+              - flash.delete(key)
+          = yield
+  = yield(:page_javascript) if content_for? :page_javascript
